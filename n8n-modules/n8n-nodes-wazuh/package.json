@@ -1,7 +1,7 @@
 {
 	"name": "@beyond-ordinary-cloud/n8n-nodes-wazuh",
-	"version": "0.1.4",
-	"description": "n8n community node for running Wazuh Manager active response commands",
+	"version": "0.1.5",
+	"description": "n8n community node for Wazuh Server API and Wazuh Indexer API workflows",
 	"license": "MIT",
 	"homepage": "https://github.com/Thrive-Developer/boc/tree/main/n8n-modules/n8n-nodes-wazuh",
 	"keywords": [
@@ -23,9 +23,13 @@
 		"lint": "n8n-node lint",
 		"lint:fix": "n8n-node lint --fix",
 		"release": "n8n-node release",
-		"prepublishOnly": "n8n-node prerelease"
+		"prepublishOnly": "n8n-node prerelease",
+		"test": "npm run build && node --test test/*.test.js"
 	},
 	"files": [
+		"dist/credentials/WazuhIndexerApi.credentials.d.ts",
+		"dist/credentials/WazuhIndexerApi.credentials.js",
+		"dist/credentials/WazuhIndexerApi.credentials.js.map",
 		"dist/credentials/WazuhManagerApi.credentials.d.ts",
 		"dist/credentials/WazuhManagerApi.credentials.js",
 		"dist/credentials/WazuhManagerApi.credentials.js.map",
@@ -39,6 +43,7 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
+			"dist/credentials/WazuhIndexerApi.credentials.js",
 			"dist/credentials/WazuhManagerApi.credentials.js"
 		],
 		"nodes": [

@@ -2,30 +2,19 @@ import type {
 	ICredentialDataDecryptedObject,
 	ICredentialTestRequest,
 	ICredentialType,
-	IExecuteFunctions,
-	IExecuteSingleFunctions,
 	Icon,
-	IHookFunctions,
-	IHttpRequestOptions,
-	ILoadOptionsFunctions,
 	INodeProperties,
 } from 'n8n-workflow';
 
-export const WAZUH_MANAGER_API_CREDENTIAL_NAME = 'wazuhManagerApi';
+export const WAZUH_INDEXER_API_CREDENTIAL_NAME = 'wazuhIndexerApi';
 
-export interface WazuhManagerApiCredentials extends ICredentialDataDecryptedObject {
+export interface WazuhIndexerApiCredentials extends ICredentialDataDecryptedObject {
 	baseUrl: string;
 	port: number;
 	username: string;
 	password: string;
 	allowUnauthorizedCerts: boolean;
 }
-
-type WazuhManagerApiContext =
-	| IExecuteFunctions
-	| IExecuteSingleFunctions
-	| IHookFunctions
-	| ILoadOptionsFunctions;
 
 function assertRequiredString(value: unknown, fieldName: string): asserts value is string {
 	if (typeof value !== 'string' || value.trim() === '') {
@@ -62,9 +51,9 @@ function normalizeBaseUrl(baseUrl: string): string {
 	}
 }
 
-export function validateWazuhManagerApiCredentials(
+export function validateWazuhIndexerApiCredentials(
 	credentials: ICredentialDataDecryptedObject,
-): WazuhManagerApiCredentials {
+): WazuhIndexerApiCredentials {
 	assertRequiredString(credentials.host, 'Base URL');
 	assertRequiredPort(credentials.port);
 	assertRequiredString(credentials.username, 'Username');
@@ -79,51 +68,18 @@ export function validateWazuhManagerApiCredentials(
 	};
 }
 
-/**
- * Build the Wazuh Manager API base URL from the stored credential values.
- */
-export function getBaseUrl(credentials: WazuhManagerApiCredentials): string {
+export function getIndexerBaseUrl(credentials: WazuhIndexerApiCredentials): string {
 	return `${credentials.baseUrl}:${credentials.port}`;
 }
 
-/**
- * Request a Wazuh Manager JWT token using HTTP Basic Authentication.
- */
-export async function authenticate(this: WazuhManagerApiContext): Promise<string> {
-	const credentials = validateWazuhManagerApiCredentials(
-		await this.getCredentials(WAZUH_MANAGER_API_CREDENTIAL_NAME),
-	);
-	const baseUrl = getBaseUrl(credentials);
+export class WazuhIndexerApi implements ICredentialType {
+	name = 'wazuhIndexerApi';
 
-	const options: IHttpRequestOptions = {
-		method: 'POST',
-		url: `${baseUrl}/security/user/authenticate?raw=true`,
-		auth: {
-			username: credentials.username,
-			password: credentials.password,
-		},
-		json: false,
-		// n8n maps this to rejectUnauthorized = !allowUnauthorizedCerts.
-		skipSslCertificateValidation: credentials.allowUnauthorizedCerts,
-	};
-
-	const token = await this.helpers.httpRequest.call(this, options);
-
-	if (typeof token !== 'string' || token.trim() === '') {
-		throw new Error('Wazuh Manager API authentication did not return a JWT token');
-	}
-
-	return token;
-}
-
-export class WazuhManagerApi implements ICredentialType {
-	name = 'wazuhManagerApi';
-
-	displayName = 'Wazuh Manager API';
+	displayName = 'Wazuh Indexer API';
 
 	icon: Icon = 'file:../icons/boc.svg';
 
-	documentationUrl = 'https://documentation.wazuh.com/current/user-manual/api/getting-started.html';
+	documentationUrl = 'https://documentation.wazuh.com/current/user-manual/indexer-api/getting-started.html';
 
 	properties: INodeProperties[] = [
 		{
@@ -131,18 +87,18 @@ export class WazuhManagerApi implements ICredentialType {
 			name: 'host',
 			type: 'string',
 			default: '',
-			placeholder: 'https://wazuh.example.com',
+			placeholder: 'https://wazuh-indexer.example.com',
 			required: true,
 			description:
-				'Wazuh Manager API base URL including protocol, without port, for example https://wazuh.example.com or http://172.16.12.185.',
+				'Wazuh Indexer API base URL including protocol, without port, for example https://wazuh-indexer.example.com or http://172.16.12.185.',
 		},
 		{
 			displayName: 'Port',
 			name: 'port',
 			type: 'number',
-			default: 55000,
+			default: 9200,
 			required: true,
-			description: 'Port exposed by the Wazuh Manager API.',
+			description: 'Port exposed by the Wazuh Indexer API.',
 		},
 		{
 			displayName: 'Username',
@@ -150,7 +106,7 @@ export class WazuhManagerApi implements ICredentialType {
 			type: 'string',
 			default: '',
 			required: true,
-			description: 'Wazuh Manager API username used for Basic Authentication.',
+			description: 'Wazuh Indexer API username used for Basic Authentication.',
 		},
 		{
 			displayName: 'Password',
@@ -159,7 +115,7 @@ export class WazuhManagerApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			required: true,
-			description: 'Wazuh Manager API password used for Basic Authentication.',
+			description: 'Wazuh Indexer API password used for Basic Authentication.',
 		},
 		// eslint-disable-next-line @n8n/community-nodes/credential-password-field
 		{
@@ -173,10 +129,10 @@ export class WazuhManagerApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			method: 'POST',
+			method: 'GET',
 			baseURL:
 				'={{$credentials.host.replace(/\\/+$/, "").replace(/:\\d+$/, "") + ":" + $credentials.port}}',
-			url: '/security/user/authenticate',
+			url: '/',
 			auth: {
 				username: '={{$credentials.username}}',
 				password: '={{$credentials.password}}',
@@ -184,15 +140,5 @@ export class WazuhManagerApi implements ICredentialType {
 			json: true,
 			skipSslCertificateValidation: '={{$credentials.allowUnauthorizedCerts}}',
 		},
-		rules: [
-			{
-				type: 'responseSuccessBody',
-				properties: {
-					key: 'data.token',
-					value: undefined,
-					message: 'Wazuh Manager API authentication did not return a JWT token',
-				},
-			},
-		],
 	};
 }

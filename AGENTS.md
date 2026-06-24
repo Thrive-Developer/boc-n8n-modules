@@ -13,5 +13,6 @@ Repo ini adalah monorepo untuk n8n community node modules.
 
 - Saat mengerjakan module, jalankan command dari directory module, misalnya `cd n8n-modules/n8n-nodes-wazuh`.
 - Untuk validasi module yang diubah, jalankan `npm ci`, `npm run lint`, dan `npm run build` di module tersebut.
+- Jika module perlu dipublish, pastikan versi package sudah dibump dan publish dijalankan dari directory module yang sama.
 - Saat menambah module baru, buat directory baru di `n8n-modules/<module-name>/` dan tambahkan entry module itu ke workflow CI, publish, dan Dependabot bila perlu.
 - Jangan mencetak isi rahasia dari `.env`; cukup referensikan nama key seperti `NPMJS_TOKEN` atau `NPM_TOKEN`.

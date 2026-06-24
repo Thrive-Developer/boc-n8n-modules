@@ -7,11 +7,17 @@
 		"credentialDocumentation": [
 			{
 				"url": "https://documentation.wazuh.com/current/user-manual/api/getting-started.html"
+			},
+			{
+				"url": "https://documentation.wazuh.com/current/user-manual/indexer-api/getting-started.html"
 			}
 		],
 		"primaryDocumentation": [
 			{
 				"url": "https://documentation.wazuh.com/current/user-manual/api/reference.html"
+			},
+			{
+				"url": "https://documentation.wazuh.com/current/user-manual/indexer-api/use-case.html"
 			}
 		]
 	}
