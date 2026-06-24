@@ -1,6 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyForRuleGet = {
+	'@version': [2],
 	resource: ['rule'],
 	operation: ['get'],
 };
@@ -13,6 +14,7 @@ export const ruleDescription: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['rule'],
 			},
 		},

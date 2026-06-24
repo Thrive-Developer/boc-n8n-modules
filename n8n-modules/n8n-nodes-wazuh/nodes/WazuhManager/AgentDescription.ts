@@ -1,11 +1,13 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyForAgentList = {
+	'@version': [2],
 	resource: ['agent'],
 	operation: ['list'],
 };
 
 const showOnlyForAgentRestart = {
+	'@version': [2],
 	resource: ['agent'],
 	operation: ['restart'],
 };
@@ -18,6 +20,7 @@ export const agentDescription: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['agent'],
 			},
 		},
@@ -52,6 +55,7 @@ export const agentDescription: INodeProperties[] = [
 		placeholder: '001',
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['agent'],
 				operation: ['get', 'restart'],
 			},

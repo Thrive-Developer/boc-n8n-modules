@@ -11,6 +11,7 @@ import { NodeApiError, NodeConnectionTypes, NodeOperationError } from 'n8n-workf
 import { activeResponseDescription } from './ActiveResponseDescription';
 import { agentDescription } from './AgentDescription';
 import { decoderDescription } from './DecoderDescription';
+import { legacyActiveResponseDescription } from './LegacyActiveResponseDescription';
 import {
 	buildActiveResponsePayload,
 	buildAgentGetQuery,
@@ -39,8 +40,9 @@ export class WazuhManager implements INodeType {
 		name: 'wazuhManager',
 		icon: 'file:boc.svg',
 		group: ['transform'],
-		version: 1,
-		subtitle: '={{$parameter["resource"] + ": " + $parameter["operation"]}}',
+		version: [1, 2],
+		defaultVersion: 2,
+		subtitle: '={{$parameter.resource ? $parameter["resource"] + ": " + $parameter["operation"] : $parameter["operation"]}}',
 		description: 'Work with the Wazuh Server API and Wazuh Indexer API',
 		defaults: {
 			name: 'Wazuh',
@@ -54,7 +56,7 @@ export class WazuhManager implements INodeType {
 				required: true,
 				displayOptions: {
 					show: {
-						resource: ['activeResponse', 'agent', 'decoder', 'rule'],
+						'@version': [1],
 					},
 				},
 			},
@@ -63,7 +65,18 @@ export class WazuhManager implements INodeType {
 				required: true,
 				displayOptions: {
 					show: {
+						'@version': [2],
 						resource: ['indexer', 'securityEvent', 'vulnerability'],
+					},
+				},
+			},
+			{
+				name: 'wazuhManagerApi',
+				required: true,
+				displayOptions: {
+					show: {
+						'@version': [2],
+						resource: ['activeResponse', 'agent', 'decoder', 'rule'],
 					},
 				},
 			},
@@ -74,6 +87,11 @@ export class WazuhManager implements INodeType {
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
+				displayOptions: {
+					show: {
+						'@version': [2],
+					},
+				},
 				options: [
 					{
 						name: 'Active Response',
@@ -106,6 +124,7 @@ export class WazuhManager implements INodeType {
 				],
 				default: 'activeResponse',
 			},
+			...legacyActiveResponseDescription,
 			...activeResponseDescription,
 			...agentDescription,
 			...vulnerabilityDescription,
@@ -122,7 +141,11 @@ export class WazuhManager implements INodeType {
 
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
-				const resource = this.getNodeParameter('resource', itemIndex) as string;
+				const nodeVersion = Number(this.getNode().typeVersion ?? 2);
+				const resource =
+					nodeVersion === 1
+						? 'activeResponse'
+						: (this.getNodeParameter('resource', itemIndex) as string);
 				const operation = this.getNodeParameter('operation', itemIndex) as string;
 				const apiScope = getResourceApiScope(resource);
 				let json: IDataObject;

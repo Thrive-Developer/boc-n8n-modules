@@ -1,6 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyForDecoderList = {
+	'@version': [2],
 	resource: ['decoder'],
 	operation: ['list'],
 };
@@ -13,6 +14,7 @@ export const decoderDescription: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['decoder'],
 			},
 		},

@@ -1,22 +1,17 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-const showOnlyForActiveResponseRunCommand = {
-	'@version': [2],
-	resource: ['activeResponse'],
-	operation: ['runCommand'],
+const showOnlyForLegacyActiveResponse = {
+	'@version': [1],
 };
 
-export const activeResponseDescription: INodeProperties[] = [
+export const legacyActiveResponseDescription: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
 		displayOptions: {
-			show: {
-				'@version': [2],
-				resource: ['activeResponse'],
-			},
+			show: showOnlyForLegacyActiveResponse,
 		},
 		options: [
 			{
@@ -36,7 +31,7 @@ export const activeResponseDescription: INodeProperties[] = [
 		required: true,
 		placeholder: '!firewall-drop',
 		displayOptions: {
-			show: showOnlyForActiveResponseRunCommand,
+			show: showOnlyForLegacyActiveResponse,
 		},
 		description: 'Active Response command name',
 	},
@@ -47,7 +42,7 @@ export const activeResponseDescription: INodeProperties[] = [
 		default: '',
 		placeholder: '001,002,003',
 		displayOptions: {
-			show: showOnlyForActiveResponseRunCommand,
+			show: showOnlyForLegacyActiveResponse,
 		},
 		description:
 			'Comma-separated list of agent IDs. Leave empty to run the command on all agents.',
@@ -59,7 +54,7 @@ export const activeResponseDescription: INodeProperties[] = [
 		default: '',
 		placeholder: '1.2.3.4',
 		displayOptions: {
-			show: showOnlyForActiveResponseRunCommand,
+			show: showOnlyForLegacyActiveResponse,
 		},
 		description: 'Comma-separated arguments passed to the command',
 	},
@@ -69,7 +64,7 @@ export const activeResponseDescription: INodeProperties[] = [
 		type: 'json',
 		default: '{}',
 		displayOptions: {
-			show: showOnlyForActiveResponseRunCommand,
+			show: showOnlyForLegacyActiveResponse,
 		},
 		description: 'Alert data object sent as alert.data in the Wazuh Active Response request',
 	},
@@ -79,7 +74,7 @@ export const activeResponseDescription: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: showOnlyForActiveResponseRunCommand,
+			show: showOnlyForLegacyActiveResponse,
 		},
 		description: 'Whether to disable the Wazuh API timeout response',
 	},

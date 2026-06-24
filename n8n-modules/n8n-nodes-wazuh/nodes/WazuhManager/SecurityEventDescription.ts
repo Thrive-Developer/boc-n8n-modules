@@ -1,6 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 
 const showOnlyForSecurityEventSearchAlerts = {
+	'@version': [2],
 	resource: ['securityEvent'],
 	operation: ['searchAlerts'],
 };
@@ -13,6 +14,7 @@ export const securityEventDescription: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['securityEvent'],
 			},
 		},
@@ -64,6 +66,7 @@ export const securityEventDescription: INodeProperties[] = [
 		default: '{"query":{"match_all":{}}}',
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['securityEvent'],
 				operation: ['searchAlerts'],
 				queryMode: ['dsl'],
@@ -79,6 +82,7 @@ export const securityEventDescription: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['securityEvent'],
 				operation: ['searchAlerts'],
 				queryMode: ['build'],
@@ -180,6 +184,7 @@ export const securityEventDescription: INodeProperties[] = [
 		default: '@timestamp',
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['securityEvent'],
 				operation: ['searchAlerts'],
 				queryMode: ['build'],
@@ -194,6 +199,7 @@ export const securityEventDescription: INodeProperties[] = [
 		default: 'desc',
 		displayOptions: {
 			show: {
+				'@version': [2],
 				resource: ['securityEvent'],
 				operation: ['searchAlerts'],
 				queryMode: ['build'],

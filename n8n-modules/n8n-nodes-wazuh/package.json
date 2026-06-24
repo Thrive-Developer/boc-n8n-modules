@@ -1,6 +1,6 @@
 {
 	"name": "@beyond-ordinary-cloud/n8n-nodes-wazuh",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "n8n community node for Wazuh Server API and Wazuh Indexer API workflows",
 	"license": "MIT",
 	"homepage": "https://github.com/Thrive-Developer/boc/tree/main/n8n-modules/n8n-nodes-wazuh",
