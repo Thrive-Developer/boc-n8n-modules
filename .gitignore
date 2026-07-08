@@ -6,6 +6,8 @@ node_modules/
 dist/
 coverage/
 *.tsbuildinfo
+n8n-modules/*/env.ts
+n8n-modules/*/shared/
 
 # Local environment, npm auth, and secrets
 .env
