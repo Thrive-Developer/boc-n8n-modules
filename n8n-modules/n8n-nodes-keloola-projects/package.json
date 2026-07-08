@@ -1,0 +1,64 @@
+{
+  "name": "@keloola/n8n-nodes-keloola-projects",
+  "version": "0.2.0",
+  "description": "n8n community node package for Keloola Projects",
+  "license": "MIT",
+  "homepage": "https://github.com/Thrive-Developer/keloola-n8n-modules/tree/main/n8n-modules/n8n-nodes-keloola-projects#readme",
+  "keywords": [
+    "n8n-community-node-package",
+    "keloola",
+    "projects",
+    "api",
+    "n8n"
+  ],
+  "author": {
+    "name": "Benny Rahmat",
+    "email": "akunbeben@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thrive-Developer/keloola-n8n-modules.git",
+    "directory": "n8n-modules/n8n-nodes-keloola-projects"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "format": "prettier --write \"**/*.ts\" --ignore-path ../../.prettierignore",
+    "format:check": "prettier --check \"**/*.ts\" --ignore-path ../../.prettierignore",
+    "check-types": "tsc --noEmit",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/KeloolaProjectsApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Projects/KeloolaProjects.node.js"
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@n8n/node-cli": "*",
+    "@types/node": "^25.2.0",
+    "eslint": "9.32.0",
+    "prettier": "3.6.2",
+    "release-it": "^19.0.4",
+    "typescript": "6.0.3",
+    "zod": "^4.3.6"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "node": "n8n-nodes-keloola-accounting",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Accounting"],
+  "resources": {
+    "credentialDocumentation": [
+      {
+        "url": "https://github.com/Thrive-Developer/keloola-n8n-modules/tree/main/n8n-modules/n8n-nodes-keloola-accounting#credentials"
+      }
+    ],
+    "primaryDocumentation": [
+      {
+        "url": "https://github.com/Thrive-Developer/keloola-n8n-modules/tree/main/n8n-modules/n8n-nodes-keloola-accounting#readme"
+      }
+    ]
+  }
+}
