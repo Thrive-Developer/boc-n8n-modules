@@ -73,6 +73,9 @@ on:
         default: n8n-modules/n8n-nodes-wazuh
         options:
           - n8n-modules/n8n-nodes-wazuh
+          - n8n-modules/n8n-nodes-keloola-accounting
+          - n8n-modules/n8n-nodes-keloola-accounting-saas
+          - n8n-modules/n8n-nodes-keloola-projects
 
 jobs:
   publish:
@@ -86,7 +89,7 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Resolve module
         id: module
@@ -148,3 +151,5 @@ jobs:
         working-directory: ${{ steps.module.outputs.module_path }}
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN || secrets.NPMJS_TOKEN }}
+          ACCOUNTING_BASE_URL: ${{ vars.ACCOUNTING_BASE_URL }}
+          AUTH_BASE_URL: ${{ vars.AUTH_BASE_URL }}

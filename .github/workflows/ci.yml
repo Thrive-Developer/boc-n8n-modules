@@ -20,9 +20,12 @@ jobs:
       matrix:
         module:
           - n8n-modules/n8n-nodes-wazuh
+          - n8n-modules/n8n-nodes-keloola-accounting
+          - n8n-modules/n8n-nodes-keloola-accounting-saas
+          - n8n-modules/n8n-nodes-keloola-projects
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -42,3 +45,6 @@ jobs:
       - name: Run build
         run: npm run build
         working-directory: ${{ matrix.module }}
+        env:
+          ACCOUNTING_BASE_URL: https://accounting.example.test
+          AUTH_BASE_URL: https://auth.example.test
