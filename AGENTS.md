@@ -5,6 +5,7 @@ Repo ini adalah monorepo untuk n8n community node modules.
 ## Struktur
 
 - `n8n-modules/<module-name>/` berisi satu package npm n8n community node.
+- `n8n-modules/support/` berisi helper internal untuk generate `env.ts` dan shared source Keloola Accounting.
 - File package seperti `package.json`, `package-lock.json`, `tsconfig.json`, `eslint.config.mjs`, `nodes/`, `credentials/`, dan `icons/` tetap berada di dalam module masing-masing.
 - Konfigurasi repo-level seperti `.github/`, `.gitignore`, `.env.example`, dan instruksi agent berada di root repo.
 - `.env`, `.codex/`, dan `.agents/` adalah state lokal dan tidak boleh dicommit.
@@ -15,4 +16,5 @@ Repo ini adalah monorepo untuk n8n community node modules.
 - Untuk validasi module yang diubah, jalankan `npm ci`, `npm run lint`, dan `npm run build` di module tersebut.
 - Jika module perlu dipublish, pastikan versi package sudah dibump dan publish dijalankan dari directory module yang sama.
 - Saat menambah module baru, buat directory baru di `n8n-modules/<module-name>/` dan tambahkan entry module itu ke workflow CI, publish, dan Dependabot bila perlu.
+- Package di repo ini memakai `npm` dan `n8n-node`; jangan menambah dependency Bun untuk module baru.
 - Jangan mencetak isi rahasia dari `.env`; cukup referensikan nama key seperti `NPMJS_TOKEN` atau `NPM_TOKEN`.
